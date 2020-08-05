@@ -2,11 +2,11 @@ library("odbc")
 
 con <- dbConnect(odbc::odbc(),
                  Driver   = "FreeTDS",
-                 Server   = "172.17.5.80\\FFMMSSQL, 1433",
-                 Database = "FIFOMI_RIESGOS",
-                 UID      = "riesgos",
-                 PWD      = "53Cre7@",
-                 Port     = 1433)
+                 Server   = "",
+                 Database = "",
+                 UID      = "",
+                 PWD      = "",
+                 Port     = ####)
 
 Reservas <- dbGetQuery(con, "SELECT * FROM RSG_RESERVA")
 
