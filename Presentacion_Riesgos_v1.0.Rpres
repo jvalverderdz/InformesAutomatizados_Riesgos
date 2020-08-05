@@ -1,0 +1,450 @@
+```{r setup, include=FALSE}
+#Importación de librerías
+library(knitr)
+library(odbc)
+library(DBI)
+library(expss)
+library(dplyr)
+library(formattable)
+library(ggplot2)
+
+#Establecimiento del directorio de trabajo
+setwd("/home/ecornejo/R")
+
+#Mandar a llamar el archivo .R que genera las tablas y gráficas
+
+#source("exe_tablas_graficas.R")
+
+#Opciones del sistema
+options(digits=2)
+opts_chunk$set(cache=TRUE)
+
+#Definición de variables globales
+meses <- c("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+          "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")
+good_cals <- c("A-1", "A-2", "B-1")
+medium_cals <- c("B-2", "B-3")
+bad_cals <- c("C-1", "C-2", "D", "E")
+
+###
+### DEFINE AQUÍ EL PERIODO ACTUAL PARA GENERAR LOS REPORTES, GRÁFICAS Y TABLAS DE ### LA PRESENTACIÓN
+###
+year <- as.character(2019)
+month <- as.character(12)
+day <- as.character(15)
+per <- as.character(201910)
+
+sesion <- "Enésima Sesión Ordinaria"
+fecha <- "15 de diciembre de 2019"
+
+```
+
+Comité de Riesgos
+=======================================================
+width: 1600
+height: 900
+css: prueba1.css
+font-import: https://fonts.googleapis.com/css?family=Montserrat
+font-family: 'Montserrat'
+
+<div class="sesion">
+`r sesion`
+</div>
+<div class="fecha">
+`r fecha`
+</div>
+
+
+I. Comentarios Iniciales
+========================================================
+type: sub-section
+
+Resumen
+========================================================
+type: regular
+
+Insertar bullets con información relevantef
+Generar gráfica con variaciones de las reservas y/o exposición
+
+<center>
+<img src="graphs/resumen.png" width=1200 height=700></img>
+</center>
+
+
+Comentarios iniciales
+========================================================
+type: regular
+class: small
+- Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+- Da mi basia mille, deinde centum, dein mille altera, dein secunda centum, deinde usque altera mille, deinde centum.
+
+<center>
+<img src="tables/acreditados_interesantes.png" class="table_img"></img>
+</center>
+
+
+II. Riesgo de Liquidez
+========================================================
+type: sub-section
+
+Cartera Global
+================================================
+type: regular
+class: small
+
+### Distribución del monto en exposición (millones de pesos)  
+- Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+- Soles occidere et redire possunt: nobis, cum semel occidit breuis lux, nox est perpetua una dormienda.
+- Da mi basia mille, deinde centum, dein mille altera, dein secunda centum, deinde usque altera mille, deinde centum.
+
+<center>
+<img src="tables/cartera_global.png" class="table_img"></img>
+</center>
+
+Exposición al incumplimiento
+==========================================================
+type: regular
+class: small
+### (`r meses[[as.numeric(month)]]` `r as.character(year)`, millones de pesos)
+-Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+-Soles occidere et redire possunt: nobis, cum semel occidit breuis lux, nox est perpetua una dormienda.
+-Da mi basia mille, deinde centum, dein mille altera, dein secunda centum, deinde usque altera mille, deinde centum.
+
+<center>
+<img src="tables/exposicion.png" class="table_img" style = "width: 80%"></img>
+</center>
+
+
+
+Principales clientes vigentes conforme a reserva generada
+============================================================
+type: regular
+class: small
+### (`r meses[[as.numeric(month)]]` `r as.character(year)`)
+
+-Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+-Soles occidere et redire possunt: nobis, cum semel occidit breuis lux, nox est perpetua una dormienda.
+-Da mi basia mille, deinde centum, dein mille altera, dein secunda centum, deinde usque altera mille, deinde centum.
+
+<center>
+<img src="tables/reserva.png" class="table_img" style = "width: 80%"></img>
+</center>
+
+
+Principales clientes por probabilidad de incumplimiento
+=================================================================
+type: regular
+class: small
+### Clientes con EI>70mdp)
+-Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+-Soles occidere et redire possunt: nobis, cum semel occidit breuis lux, nox est perpetua una dormienda.
+
+<center>
+<img src="tables/pi_grandes.png" class="table_img"></img>
+</center>
+
+
+Principales clientes por probabilidad de incumplimiento sin considerar monto
+===============================================================
+type: regular
+class: small
+-Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+-Soles occidere et redire possunt: nobis, cum semel occidit breuis lux, nox est perpetua una dormienda.
+
+<center>
+<img src="tables/pi_todos.png" class="table_img"></img>
+</center>
+
+
+Relación de probabilidad de incumplimiento con grado de riesgo vs nivel de reservas
+==============================================================
+type: regular
+
+
+<center>
+<img src="graphs/pi_calificacion_reservas.png" width=1200 height=700></img>
+</center>
+
+
+Relación de probabilidad de incumplimiento vs nivel de reservas
+====================================================================
+type: regular
+
+<center>
+<img src="graphs/pi_calificacion_reservas2.png" width=1200 height=700></img>
+</center>
+
+
+Saldos por grado de riesgo
+=================================================================
+type: regular
+class: small
+### (`r meses[[as.numeric(month)]]` `r year` , millones de pesos)
+<div>-Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.</div>
+
+<div class="column-left" style = "margin-top: 120px;">
+<img src = "tables/saldos_calificacion.png" style = "width: 100%" />
+</div>
+<div class="column-right" style = "margin-top: 120px;">
+<img src = "graphs/saldos_calificacion.png" style = "width: 100%" />
+</div>
+
+
+Exposición acumulada por grado de riesgo
+==========================================================
+type: regular
+class: small
+### `r meses[[as.numeric(month)]]` `r year`
+
+<center>
+<img src="graphs/exposicion_por_riesgo.png" width=1200 height=700></img>
+</center>
+
+Exposición acumulada por acreditado
+==========================================================
+type: regular
+class: small
+### `r meses[[as.numeric(month)]]` `r year`
+
+<center>
+<img src="graphs/exposicion_por_acreditado.png" width=1200 height=700></img>
+</center>
+
+
+Saldo por tipo de acreditado - Cartera Global
+=================================================================
+type: regular
+class: small
+### (`r meses[[as.numeric(month)]]` `r year` , millones de pesos)
+- Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+
+<center>
+<img src="tables/saldos_tipo.png" style = "width: 60%"></img>
+<img src="graphs/saldos_tipo.png" style = "width: 40%"></img>
+</center>
+
+
+Saldo por tipo de acreditado - Vigentes
+==========================================================
+type: regular
+class: small
+### (`r meses[[as.numeric(month)]]` `r year` , millones de pesos)
+- Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+
+<center>
+<img src="tables/saldos_tipo_vigentes.png" style = "width: 60%"></img>
+<img src="graphs/saldos_tipo_vigentes.png" style = "width: 40%"></img>
+</center>
+
+
+Saldo por anexo
+==========================================================
+type: regular
+class: small
+### `r meses[[as.numeric(month)]]` `r year`
+
+- Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+
+<center>
+<img src="tables/saldos_anexo.png" style = "width: 60%"></img>
+<img src="graphs/saldos_anexo.png" style = "width: 40%"></img>
+</center>
+
+Exposición por grado de riesgo y categoría
+==========================================================
+type: regular
+### `r meses[[as.numeric(month)]]` `r year`
+
+<center>
+<img src="graphs/ei_riesgo_categoria.png" width=1200 height=700></img>
+</center>
+
+
+Cartera por Gerencia Regional
+==========================================================
+type: regular
+class: small
+-Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+-Soles occidere et redire possunt: nobis, cum semel occidit breuis lux, nox est perpetua una dormienda.
+
+<center>
+<img src="tables/cartera_gerencia.png" class="table_img" style="width: 80%"></img>
+</center>
+
+<div align = "right" class = "small">La tabla está ordenada por exposición al incumplimiento</div>
+
+
+Cambios de grado de riesgo
+=========================================================
+type: regular
+class: small
+### (`r meses[[as.numeric(month)]]` `r year`)
+
+<center>
+Deterioro de Grado de Riesgo
+<img src="tables/cambio_riesgo_peor.png" style = "width: 80%"></img>
+
+Mejora de Grado de Riesgo
+<img src="tables/cambio_riesgo_mejor.png" style = "width: 80%"></img>
+</center>
+
+Bajas de acreditados
+=========================================================
+type: regular
+class: small
+Tabla con acreditados que salieron de la cartera de crédito
+
+
+Incorporaciones a la cartera de crédito
+==========================================================
+type: regular
+class: small
+
+Tabla con acreditados que se incorporaron a la cartera de crédito
+
+Matriz de transición por grado de riesgo o días de atraso (Anual)
+==========================================================
+type: regular
+class: small
+
+Matriz de transición de otro script donde se genera
+
+
+Estadísticos según tipo de cliente
+=========================================================
+type: regular
+class: small
+### (`r meses[[as.numeric(month)]]` `r year`, millones de pesos)
+
+- Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+- Soles occidere et redire possunt: nobis, cum semel occidit breuis lux, nox est perpetua una dormienda.
+
+<center>
+<div class="column-left" style = "width: 50%;">
+IFE <br>
+<img src="tables/estadisticos_clientes_IFE.png" style = "width: 100%"></img><br>
+</div>
+<div class="column-right" style = "width: 50%;">
+Directos <br>
+<img src="tables/estadisticos_clientes_Directos.png" style = "width: 100%"></img><br>
+</div>
+
+IFB <br>
+<img src="tables/estadisticos_clientes_IFB.png" style = "width: 50%"></img><br>
+
+</center>
+
+
+Principales diferencias en la Exposición al incumplimiento
+================================================================
+type: regular
+class: small
+### (`r meses[[as.numeric(month)]]` `r year`, millones de pesos)
+
+- Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+- Soles occidere et redire possunt: nobis, cum semel occidit breuis lux, nox est perpetua una dormienda.
+
+<center>
+<div class="column-left" style = "width: 50%;">
+Incrementos<br>
+<img src="tables/diferencias_exposicion_1.png" class="table_img"></img><br>
+</div>
+
+<div class="column-right" style = "width: 50%;">
+Decrementos<br>
+<img src="tables/diferencias_exposicion_2.png" class="table_img"></img>
+</div>
+</center>
+
+
+Cartera por canal de distribución
+================================================================
+type: regular
+class: small
+### (`r meses[[as.numeric(month)]]` `r year`, millones de pesos)
+
+- Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+- Soles occidere et redire possunt: nobis, cum semel occidit breuis lux, nox est perpetua una dormienda.
+
+<center>
+<img src="tables/canal_distribucion.png" class="table_img"></img>
+</center>
+
+
+Grupo de Actividad
+================================================================
+type: regular
+class: small
+### (`r meses[[as.numeric(month)]]` `r year`, millones de pesos)
+
+- Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+- Soles occidere et redire possunt: nobis, cum semel occidit breuis lux, nox est perpetua una dormienda.
+
+<center>
+<img src="tables/grupo.png" class="table_img"></img>
+</center>
+
+Cartera por grupo de actividad
+===============================================================
+type: regular
+class: small
+
+<center>
+<img src="graphs/grupo_sin_vencida.png" width=600 height=350></img>
+</center>
+### Cartera por grupo de actividad considerando la cartera vencida
+<center>
+<img src="graphs/grupo_t-1.png" width=600 height=350></img>
+<img src="graphs/grupo.png" width=600 height=350></img>
+</center>
+
+Cartera por plazo
+=================================================================
+type: regular
+class: small
+(`r meses[[as.numeric(month)]]` `r year`, millones de pesos)
+- Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+
+<center>
+<img src="tables/cartera_plazos.png" class="table_img" style="width: 100%"></img>
+</center>
+
+Cartera por plazo - Cont.
+=================================================================
+type: regular
+class: small
+(`r meses[[as.numeric(month)]]` `r year`, millones de pesos)
+- Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+
+<center>
+<img src="graphs/cartera_plazos.png" width=1200 height=650></img>
+</center>
+
+Gerencia Regional
+======================================================
+type: regular
+class: small
+### (millones de pesos)
+
+Mapita generado en R, o imagen importada de las gerencias regionales más interesantes
+
+
+ANEXO I. Indicadores financieros
+====================================================================
+type: sub-section
+Se integra la evolución de los principales indicadores financieros, para consulta.
+##Serie de diapositivas con las gráficas de los indicadores financieros seleccionados
+##(Si llega a ser posible, se buscaría que dicha información se scrapeara directamente de la fuente
+##para generar automáticamente las gráficas)
+
+
+Enésima Sesión Ordinaria
+==================================================================
+type: section
+
+<div class="sesion">
+`r sesion`
+</div>
+<div class="fecha">
+`r fecha`
+</div>

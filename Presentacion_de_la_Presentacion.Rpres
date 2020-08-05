@@ -1,0 +1,403 @@
+```{r setup, include=FALSE}
+#Importación de librerías
+library(knitr)
+library(odbc)
+library(DBI)
+library(expss)
+library(dplyr)
+library(formattable)
+library(ggplot2)
+
+#Establecimiento del directorio de trabajo
+setwd("/home/ecornejo/R")
+
+#Opciones del sistema
+options(digits=2)
+opts_chunk$set(cache=TRUE)
+
+```
+
+Automatización de la Presentación del Comité de Riesgos
+=======================================================
+width: 1600
+height: 900
+css: PresentacionPresentacion.css
+font-import: https://fonts.googleapis.com/css?family=Montserrat
+font-family: 'Montserrat'
+
+<br>
+<h2 style = "font-size: 100%;">
+Informe realizado por</h2>
+## Francisco Javier Valverde Rodríguez
+
+Contexto
+========================================================
+type: regular
+
+<hr>
+- Alto costo para la generación de la presentación del Comité de Riesgos:
+  - Costo de trabajo (Costo de oportunidad)
+  - Costo de tiempo
+  - Costo computacional
+<hr>
+- Riesgo operacional:
+  - Asociado al error humano
+  - Asociado al costo de oportunidad
+  - Asociado al tiempo de procesamiento
+<hr>
+- Disposiciones de la ASF para automatizar procesos de riesgos
+
+
+Introducción
+========================================================
+type: regular
+class: cientoveinte
+<hr>
+<br>
+- Herramienta RPres de RStudio
+- Generación automática de gráficas y tablas con lenguaje R
+- Definición automática de estilos con CSS
+
+
+Beneficios
+========================================================
+type: regular
+class: cientoveinte
+<hr>
+  - Reportes Instantáneos
+  - Reproducibilidad
+  - Confiabilidad
+  - Portabilidad
+
+Desventajas
+========================================================
+type: regular
+class: cientoveinte
+<hr>
+  - Capacidades técnicas para su modificación
+  - Dependencia de la base de SQL
+
+
+Requerimientos
+========================================================
+type: regular
+class: cientoveinte
+<hr>
+- RStudio instalado (o acceso a la plataforma virtual de RStudio de Fifomi)
+- Conexión a Internet
+
+Operación
+========================================================
+type: regular
+class: cientocincuenta
+<hr>
+<br><br><br><br>
+\>Definición de periodo \> Ejecución
+
+Estructura de los archivos
+========================================================
+type: regular
+<hr>
+<center>
+<img src = "NT_Esquema_PAut.JPG" style = "width: 75%"/>
+</center>
+
+Archivo .RPres
+========================================================
+type: regular
+
+<hr>
+<br><br><br>
+**.Rpres** es un formato especial de los documentos generados con **R Markdown**, que establece herramientas predeterminadas para elaborar una presentación de diapositivas, y permite conjuntar texto simple, texto formateado por **Markdown**, etiquetas de **HTML**, clases de **CSS** y resultados (outputs) de códigos de R (o ***chunks***, como son llamados).
+
+Estructura del archivo .RPres
+=======================================================
+type: regular
+<hr>
+
+- Configuración inicial o *setup*
+- Diapositiva de título
+- Cuerpo de la presentación 
+
+Configuración inicial (setup)
+=======================================================
+type: code
+<hr>
+
+```{r setup_muestra, eval = FALSE}
+#Importación de librerías
+library(knitr)
+library(odbc)
+library(DBI)
+library(expss)
+library(dplyr)
+library(formattable)
+library(ggplot2)
+
+#Establecimiento del directorio de trabajo
+setwd("/home/ecornejo/R")
+
+#Mandar a llamar el archivo .R que genera las tablas y gráficas
+source("exe_tablas_graficas.R")
+
+#Opciones del sistema
+{...}
+```
+
+Diapositiva de Título
+=============================================
+type: code
+<hr>
+
+```{r diapositiva_titulo, eval=FALSE}
+\Comité de Riesgos
+\=======================================================
+width: 1600
+height: 900
+css: prueba1.css
+font-import: https://fonts.googleapis.com/css?family=Montserrat
+font-family: 'Montserrat'
+
+<div class="sesion">
+`r sesion`
+</div>
+<div class="fecha">
+`r fecha`
+</div>
+```
+
+Cuerpo de la presentación
+============================================
+type: code
+<hr>
+
+```{r cuerpo, eval=FALSE}
+\Comentarios iniciales
+\========================================================
+type: regular
+class: small
+- Viuamus, mea Lesbia, atque amemus, rumoresque senum seueriorum omnes unius aestimemus assis.
+- Da mi basia mille, deinde centum, dein mille altera, dein secunda centum, deinde usque altera mille, deinde centum.
+
+<center>
+<img src="tables/acreditados_interesantes.png" class="table_img"></img>
+</center>
+```
+
+Archivo R: Definición de funciones
+===========================================
+type: code
+<hr>
+
+```{r definicion_funciones, eval=FALSE}
+#Script con las funciones generadoras de tablas y gráficas para la presentación del Comité de Riesgos
+#@Author: JavierValverde
+library(knitr); library(odbc); library(DBI); library(expss); library(dplyr); library(formattable);
+library(ggplot2); library(ggrepel); library(reshape); library(htmltools); library(webshot)
+
+#Opciones del sistema
+options(digits=2); options(scipen=99)
+setwd("/home/ecornejo/R")
+
+#Conexión con la base de datos
+con <- dbConnect(odbc::odbc(),
+                 Driver   = "FreeTDS",
+                 Server   = "172.17.5.80\\FFMMSSQL, 1433",
+                 Database = "FIFOMI_RIESGOS",
+                 UID      = "riesgos",
+                 PWD      = "*******",
+                 Port     = 1433)
+```
+
+Definición de funciones bis
+===========================================
+type: code
+title: false
+
+```{r funciones2, eval = FALSE}
+#Obtenemos la información de las tablas necesarias con todas las observaciones
+#De estos dataframes vamos a obtener toda la información necesaria
+Query_Conciliacion <- dbGetQuery(con, "SELECT * FROM RSG_CONCILIACION_PRUEBAV2")
+Query_Reservas <- dbGetQuery(con, "SELECT * FROM RSG_RESERVA_PRUEBA")
+Query_Reservas_Old <- dbGetQuery(con, "SELECT * FROM RSG_RESERVA")
+names(Query_Reservas) <- names(Query_Reservas_Old)
+Query_Tesoreria <- dbGetQuery(con, "SELECT * FROM RSG_INSUMOS_TESORERIA")
+
+```
+
+Definición de funciones 3
+========================================
+type: code
+title: false
+```{r funciones3, eval = FALSE}
+#Funcion para exportar tablas de formattabla en formato .png
+export_formattable <- function(f, name, width = "100%", height = NULL, background = "white", delay = 0.2){
+  w <- as.htmlwidget(f, width = width, height = height)
+  path <- html_print(w, background = background, viewer = NULL)
+  url <- paste0("file:///", gsub("\\\\", "/", normalizePath(path)))
+  webshot(url,
+          file = name,
+          selector = ".formattable_widget",
+          delay = delay)
+}
+
+#Función para mostrar los nombres cortos de los acreditados
+#función complementaria que acorta un solo nombre. Toma como input un nombre largo y devuelve un nombre corto
+acortador <- function(nombre){
+  nombre <- gsub(".", "", nombre, fixed = TRUE)
+  nombre <- gsub(",", "", nombre, fixed = TRUE)
+  nombre <- gsub(" SOFOM ENR| SOFOM ER", "", nombre)
+  nombre <- gsub(" SA\\w* DE \\w+", "", nombre)
+  nom_corto <- Query_Nombres$NOMBRE_CORTO[Query_Nombres$NOMBRE_LARGO == nombre]
+  #Si no encontró ningún valor para el nombre largo en la base, devuelve el nombre largo en minúsculas
+  if(length(nom_corto)==0) nom_corto <- tools::toTitleCase(tolower(nombre))
+  nom_corto
+}
+#Toma como input una lista de nombres largos y devuelve una lista de nombres cortos
+nombre_corto <- function(nombres_list){
+  #Aplica la función complementaria a todos los elementos de la lista de nombres con un sapply
+  nombres_output <- sapply(nombres_list, acortador)
+  #El sapply devuelve una lista con nombres. Los eliminamos:
+  names(nombres_output) <- NULL
+  
+  nombres_output
+}
+```
+
+Definicion de funciones 4
+===================================================
+type: code
+title: false
+
+```{r funciones4, eval = FALSE}
+#Obtener el subconjunto que nos interesa del dataframe principal (fecha, anexo y estatus deseados)
+  interesantes <- Query_Reservas %>% filter(Anexo == "ANEXO 31" & Estatus =="Vigente" & Periodo == as.character(per))
+  #Quedarnos solo con las variables que nos interesan
+  interesantes <- interesantes[,c("IC_Principal","Nombre_RazonSocial_ICPrincipal", "PI", "EI", "Reserva", "Porcentaje_Reservas","Calificacion")]
+  
+  #Agregar las variables por ID del acreditado
+  agg_interesantes <- interesantes %>% group_by(IC_Principal) %>%
+    summarize(Nombre = first(nombre_corto(Nombre_RazonSocial_ICPrincipal)),
+              PI = mean(as.numeric(PI)), EI = sum(as.numeric(EI)),
+              Reserva = sum(as.numeric(Reserva)), Porcentaje_Reservas = sum(as.numeric(Reserva))/sum(as.numeric(EI)), Calificacion = first(Calificacion))
+    
+  #Crear un dataframe con los datos agregados, y en unidades de millones o por cientos
+  df_interesantes <- data.frame("Acreditado" = nombre_corto(agg_interesantes$Nombre),
+                                "Probabilidad Incumplimiento" = paste(round(agg_interesantes$PI*100, digits=2), "%", sep=""),
+                                "Exposición" = agg_interesantes$EI/1000000,
+                                "Reserva" = round(agg_interesantes$Reserva/1000000, digits=2),
+                                "Porcentaje Reservas" = paste(round(agg_interesantes$Porcentaje_Reservas*100, digits=2), "%", sep=""),
+                                "Calificación" = agg_interesantes$Calificacion,
+                                stringsAsFactors = FALSE, check.names = FALSE) #StringsAsFactors = FALSE, de lo contrario, puede tomar las variables character y convertirlas en factor
+  #Generar un objeto de clase formattable
+  ft_interesantes <- formattable(df_interesantes, align = c("r", "c", "c", "c", "c", "c"), list(`Calificación`= formatter("span", style = ~ style(color = ifelse(Calificación %in% good_cals, "green", ifelse(Calificación %in% medium_cals,"gold3", "red")), `border-radius` = "8px"))))
+  
+  #Exportar la tabla
+  export_formattable(ft_interesantes, "tables/acreditados_interesantes.png", width="1000px")
+}
+  
+```
+
+Definición de funciones: Diagrama de flujo
+===============================================
+type: regular
+title: false
+
+<center>
+Definición de funciones: Diagrama de Flujo
+<br>
+<img src = "Diagrama_PA.PNG" style = "height = 100%" />
+</center>
+
+Archivo R: Ejecución de funciones
+============================================
+type: code
+
+```{r ejecucion, eval = FALSE}
+
+#Este script ejecuta las funciones definidas en 'Generador_tablas_y_graficas.R' Para crear los archivos .png que se utilizarán en la presentación
+#@Author: JavierValverde
+
+setwd("/home/ecornejo/R")
+source("Generador_tablas_y_graficas.R")
+
+##AQUI DEFINIMOS EL PERIODO
+per <- "201912"
+####
+
+#Cálculo del periodo t-1
+per_1 <- as.character(as.numeric(as.character(per))-1)
+if (substr(per,5,6) == "01") per_1 <- as.character(as.numeric(per_1) - 89)
+
+#Crea las carpetas donde se almacenarán tablas y gráficas, si no existen
+if (file.exists("tables")==FALSE) dir.create("tables"); if (file.exists("graphs")==FALSE) dir.create("graphs")
+
+gen_table_acreditados_interesantes(per)
+gen_table_cartera_global(per)
+gen_table_exposicion(per)
+gen_table_reserva(per)
+gen_table_pi(per, grandes=TRUE)
+gen_table_pi(per, grandes=FALSE)
+{...}
+#===================================================================>
+gen_graph_resumen(per)
+gen_graph_brechas_liquidez(per)
+gen_graph_saldos_calificacion(per)
+gen_graph_exposicion_por_riesgo(per)
+gen_graph_exposicion_por_acreditado(per)
+gen_graph_saldos_tipo(per)
+gen_graph_saldos_tipo(per, vencidas = FALSE)
+{...}
+```
+
+
+Archivo CSS: Definición de estilos
+=======================================================
+type: code
+
+```{r estilos1, , eval = FALSE}
+  .regular .reveal .state-background{
+    background-image: url("Fondo_Presentacion.png");
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  
+  .regular .reveal h3{
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .reveal .small{
+    font-size: 85%;
+  }
+  
+  .column-left{
+    float: left;
+    width: 60%;
+  }
+  .column-right{
+    float: right;
+    width: 40%;
+  }
+```
+
+
+Demostración y Exposición
+==============================================================
+type: section
+title: false
+# Demostración y Exposición
+
+
+Contraportada
+=======================================================
+type: section
+title: false
+# Automatización de la Presentación del Comité de Riesgos
+
+<br>
+<h2 style = "font-size: 100%;">
+Informe realizado por</h2>
+## Francisco Javier Valverde Rodríguez

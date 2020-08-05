@@ -1,0 +1,99 @@
+ .reveal *{
+    font-family: 'Montserrat';
+  }
+  
+  .section .reveal .state-background{
+    background-image: url("Fondo_Portada.png");
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+    .reveal .sesion{
+    font-size: 160%;
+    font-weight: bold;
+    margin-top: 150px;
+    text-align: center;
+  }
+  .reveal .fecha{
+    font-size: 120%;
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .section .reveal h1{
+    color: black;
+    text-align: center;
+    margin-top: 250px;
+  }
+
+  .sub-section .reveal .state-background{
+    background-image: url("Fondo_Titulo.png");
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  
+  .sub-section .reveal h2{
+    color: black;
+    text-align: center;
+    margin-top: 300px;
+    
+  }
+  
+  .regular .reveal .state-background{
+    background-image: url("Fondo_Presentacion.png");
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  
+  .regular .reveal h3{
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  
+  .reveal .small{
+    font-size: 85%;
+  }
+  .column-left{
+  float: left;
+  width: 60%;
+  }
+  .column-right{
+  float: right;
+  width: 40%;
+  }
+
+  
+  .reveal .footnote {
+    font-size: 70%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    line-height: 100%;
+  }
+  
+  .reveal .cartera_global{
+    font-size: 200%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 120px;
+    text-align: center;
+  }
+  
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+  
+  .table_img{
+    width: 100%;
+  }
+  

@@ -1,0 +1,119 @@
+ .reveal *{
+    font-family: 'Montserrat';
+  }
+  
+  .section .reveal .state-background{
+    background-image: url("Fondo_PP_Portada.PNG");
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .section .reveal h1{
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 150px;
+  }
+  
+  .section .reveal h2{
+    color: black;
+    text-align: center;
+  }
+
+  .sub-section .reveal .state-background{
+    background-image: url("Fondo_PP_Portada.PNG");
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  
+  .sub-section .reveal h2{
+    color: black;
+    text-align: center;
+    margin-top: 300px;
+    
+  }
+  
+  .regular .reveal .state-background{
+    background-image: url("Fondo_PP_Cuerpo.PNG");
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  
+  .regular .reveal h3{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 200%;
+    text-align: center;
+  }
+  
+  .regular .reveal div{
+    font-size: 115%
+  }
+  
+  
+  .reveal .cientoveinte{
+    font-size: 110%;
+  }
+  
+  .reveal .cientocincuenta{
+    text-align: center;
+    font-size: 150%;
+  }
+  .column-left{
+  float: left;
+  width: 50%;
+  }
+  .column-right{
+  float: right;
+  width: 50%;
+  }
+
+  
+  .reveal .footnote {
+    font-size: 70%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    line-height: 100%;
+  }
+  
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+  
+  .table_img{
+    width: 100%;
+  }
+  
+   .reveal .small{
+    font-size: 55%;
+  }
+  
+    .code .reveal .state-background{
+    background-image: url("Fondo_PP_Cuerpo.PNG");
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  
+  .code .reveal h3{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 200%;
+    text-align: center;
+  }
+  
+  .code .reveal div{
+    font-size: 90%
+  }
